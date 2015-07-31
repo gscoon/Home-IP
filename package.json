@@ -1,3 +1,11 @@
 {
-
+  "name": "Listen",
+  "author": "Gerren Scoon",
+  "dependencies": {
+    "digitalocean-api": "^0.1.1",
+    "doapi": "0.0.5",
+    "moment": "^2.10.6",
+    "public-ip": "^1.0.2",
+    "sqlite3": "^3.0.9"
+  }
 }

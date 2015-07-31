@@ -1,2 +1,5 @@
 config/config.js
 config/config.json
+config/sqlite3
+sqlite3
+log/listen.log

@@ -1,0 +1,9 @@
+{
+    "device": "desktop",
+    "subdomain": "desktop",
+    "domain": "example.com",
+    "ocean": {
+        "token": "abcdefg"
+    },
+    "dbPath": "./config/listen.db"
+}
