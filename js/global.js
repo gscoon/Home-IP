@@ -1,5 +1,5 @@
 app.log = function(m){
-    var ts = app.moment().format("YYYY-MM-DD h:mm:ss");
+    var ts = app.moment().format("YYYY-MM-DD HH:mm:ss");
     if(typeof m == 'object'){
         console.log(m);
     }
