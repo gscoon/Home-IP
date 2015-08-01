@@ -4,7 +4,8 @@ app = {
     moment: require('moment'),
     currentIP: null,
     nsRecord: {},
-    intervalID: null
+    intervalID: null,
+    iCount:0
 };
 
 require('./js/global');
@@ -17,7 +18,7 @@ app.start = function(){
         records.some(function(rec){
             if(rec.name == app.config.subdomain){
                 app.nsRecord = rec;
-                console.log('this is your guy: ' + rec.id);
+                app.log('this is your guy: ' + rec.id);
                 app.setLoop();
                 return true;
             }
@@ -30,16 +31,28 @@ app.setLoop = function(){
 }
 
 app.ipCheck = function(){
-    app.publicIP(function(err, ip){
-        var ts = app.moment().format("YYYY-MM-DD h:mm:ss");
-        console.log(ts + ": IP " + ip);
+    app.publicIP(function(ipErr, ip){
+        //if error is returned or ip address is invalid
+        if(ipErr != null || ip == null || !ip.isValidIP()){
+            app.log("Public IP error:");
+            console.log(ipErr);
+            return false;
+        }
+
         if(app.currentIP != ip){
-            console.log('NEW IP address: '+  ip);
+            app.log('NEW IP address: '+  ip);
             app.currentIP = ip;
             app.db.insertIPEntry(ip, function(err){
                 console.log(!err?'Insert ID: ' + this.lastID : err);
             });
             app.setDomainRecord(ip);
+        }
+
+        // after 6 loops, send the ip address to the log file
+        app.iCount++;
+        if(app.iCount == 6){
+            app.log(ip);
+            app.iCount = 0;
         }
     });
 }
@@ -53,8 +66,8 @@ app.setDomainRecord = function(){
         type: app.nsRecord.type
     };
     app.ocean.updateDomainRecordIP(rObj, function(results){
-        console.log("ocean update: ");
-        console.log(results);
+        app.log("ocean update: ");
+        app.log(results);
     });
 }
 
