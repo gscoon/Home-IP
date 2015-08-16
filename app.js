@@ -18,7 +18,7 @@ app.start = function(){
         records.some(function(rec){
             if(rec.name == app.config.subdomain){
                 app.nsRecord = rec;
-                app.log('this is your guy: ' + rec.id);
+                app.log('Found NS record: ' + rec.id);
                 app.setLoop();
                 return true;
             }
@@ -50,7 +50,8 @@ app.ipCheck = function(){
 
         // after 6 loops, send the ip address to the log file
         app.iCount++;
-        if(app.iCount == 6){
+        // 12 = 1 minute
+        if(app.iCount == (12 * 10)){
             app.log(ip);
             app.iCount = 0;
         }
