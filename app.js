@@ -9,7 +9,6 @@ app = {
 };
 
 require('./js/global');
-require('./js/db');
 require('./js/digitalocean');
 
 //first step should be to pull latest ip address from digital ocean
@@ -42,9 +41,6 @@ app.ipCheck = function(){
         if(app.currentIP != ip){
             app.log('NEW IP address: '+  ip);
             app.currentIP = ip;
-            app.db.insertIPEntry(ip, function(err){
-                console.log(!err?'Insert ID: ' + this.lastID : err);
-            });
             app.setDomainRecord(ip);
         }
 

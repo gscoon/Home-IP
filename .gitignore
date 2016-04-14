@@ -6,3 +6,4 @@ sqlite3
 log/listen.log
 log/error.log
 log/output.log
+node_modules/*
